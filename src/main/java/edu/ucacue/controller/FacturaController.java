@@ -23,50 +23,47 @@ import edu.ucacue.modelo.DetalleFactura;
 @RestController
 @RequestMapping("/api")
 public  class  FacturaController {
-
-	@Autowired
+@Autowired
 	private DetalleFacturaRepositorio detallefacturarepositorio;
 	
-	@GetMapping("/facturas")
-	public List<DetalleFactura> index() {
-		return detallefacturarepositorio.findAll();
+@GetMapping("/facturas")
+public List<DetalleFactura> index() {
+	return detallefacturarepositorio.findAll();
+}
+
+@GetMapping("/facturas/{id}")
+public DetalleFactura getById(@PathVariable int id) {
+
+	DetalleFactura detallefactura = detallefacturarepositorio.findById(id).get();
+	return detallefactura;
+}
+
+@PostMapping("/factura")
+public ResponseEntity<?> saveFactura(@RequestBody DetalleFactura dF, BindingResult result) {
+	DetalleFactura facturaGrabar;
+	Map<String, Object> response = new HashMap<>();
+
+	if (result.hasErrors()) {
+		List<String> errores = result.getFieldErrors().stream()
+				.map(err -> "El campo '" + err.getField() + "' " + err.getDefaultMessage())
+				.collect(Collectors.toList());
+		response.put("Los errores son", errores);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 	}
-	
-	
 
-	@GetMapping("/facturas/{id}")
-	public DetalleFactura getById(@PathVariable int id) {
-
-		DetalleFactura detalleFactura = detallefacturarepositorio.findById(id).get();
-		return detalleFactura;
+	try {
+		facturaGrabar = detallefacturarepositorio.save(dF);
+	} catch (DataAccessException e) {
+		response.put("mensaje", "Error al realizar el inserción en la base de datos");
+		response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-	@PostMapping("/factura")
-	public ResponseEntity<?> saveFactura(@RequestBody DetalleFactura dF, BindingResult result) {
-		DetalleFactura facturaguardar;
-		Map<String, Object> response = new HashMap<>();
 
-		if (result.hasErrors()) {
-			List<String> errores = result.getFieldErrors().stream()
-					.map(err -> "El campo '" + err.getField() + "' " + err.getDefaultMessage())
-					.collect(Collectors.toList());
-			response.put("Los errores son", errores);
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
-		}
+	response.put("mensaje", "La factura se ha insertado con éxito en la BD");
+	response.put("Factura", facturaGrabar);
 
-		try {
-			facturaguardar = detallefacturarepositorio.save(dF);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar el inserción en la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+}
 
-		response.put("mensaje", "La factura se ha insertado con éxito en la BD");
-		response.put("Factura", facturaguardar);
-
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-	}
-	
 	
 }

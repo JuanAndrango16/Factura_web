@@ -14,21 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 @Entity
 @Table(name="facturas_cabeceras")
 public class FacturaCabecera {
@@ -49,6 +34,9 @@ public class FacturaCabecera {
 	private List<DetalleFactura> detallesFacturas;
 	
 	
+	public FacturaCabecera() {
+		super();
+	}
 	public int getId() {
 		return id;
 	}

@@ -1,7 +1,5 @@
 package edu.ucacue.modelo;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,6 +29,9 @@ public class DetalleFactura {
 	
 	
 
+	public DetalleFactura() {
+		super();
+	}
 	public DetalleFactura(int cantidad, Producto producto, FacturaCabecera facturaCabecera) {
 		super();
 		this.cantidad = cantidad;
@@ -68,18 +69,7 @@ public class DetalleFactura {
 	public void setFacturaCabecera(FacturaCabecera facturaCabecera) {
 		this.facturaCabecera = facturaCabecera;
 	}
-	public List<DetalleFactura> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public Object findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public DetalleFactura save(DetalleFactura dF) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	
 	
