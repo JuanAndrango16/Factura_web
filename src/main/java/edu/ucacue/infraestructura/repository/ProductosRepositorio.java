@@ -7,11 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import edu.ucacue.modelo.Producto;
 
-
-
-public interface ProductosRepositorio extends JpaRepository<Producto, Integer>{
+public interface ProductosRepositorio extends JpaRepository<Producto, Integer> {
 	
-	@Query("select p from Persona p where p.nombre like %:nombre%")
+	@Query("select prod from Producto prod where prod.nombre like %:nombre%")
 	List<Producto> findAllByNombre(String nombre);
 
 }

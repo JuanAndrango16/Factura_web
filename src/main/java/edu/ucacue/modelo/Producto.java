@@ -1,108 +1,80 @@
 package edu.ucacue.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 @Entity
-@Table(name = "productos_table")
-public class Producto {
-
+@Table(name = "productos")
+public class Producto implements Serializable {
 	
+	private static final long serialVersionUID = 1607830177598686701L;
 	
-
-
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private int id;
-
-		@Column(name = "nombre_pro", columnDefinition = "text")
-		private String nombre;
-		
-		@Column(length = 30)	
-		private double precioporunidad;
-		
-		@Column(length = 30)
-		private String cantidad;
-
-		@Column(length = 30)
-		private String distribuidor;
-
-		public Producto(String nombre, double string, String cantidad, String distribuidor) {
-			super();
-			this.nombre = nombre;
-			this.precioporunidad = string;
-			this.cantidad = cantidad;
-			this.distribuidor = distribuidor;
-		}
-		
-		
-		public Producto(int id, String nombre, double precioporunidad, String cantidad, String distribuidor) {
-			super();
-			this.id = id;
-			this.nombre = nombre;
-			this.precioporunidad = precioporunidad;
-			this.cantidad = cantidad;
-			this.distribuidor = distribuidor;
-		}
-
-
-		public Producto() {
-			super();
-		}
-
-		public Producto(String text, String text2, String text3, String text4) {
-			// TODO Auto-generated constructor stub
-		}
-
-
-		public int getId() {
-			return id;
-		}
-
-		public void setId(int id) {
-			this.id = id;
-		}
-
-		public String getNombre() {
-			return nombre;
-		}
-
-		public void setNombre(String nombre) {
-			this.nombre = nombre;
-		}
-
-		public double getPrecioporunidad() {
-			return precioporunidad;
-		}
-
-		public void setPrecioporunidad(double d) {
-			this.precioporunidad = d;
-		}
-
-		public String getCantidad() {
-			return cantidad;
-		}
-
-		public void setCantidad(String cantidad) {
-			this.cantidad = cantidad;
-		}
-
-		public String getDistribuidor() {
-			return distribuidor;
-		}
-
-		public void setDistribuidor(String distribuidor) {
-			this.distribuidor = distribuidor;
-		}
-
-		@Override
-		public String toString() {
-			return "Persona [id=" + id + ", nombre=" + nombre + ", precio por unidad=" + precioporunidad + ", cantidad="
-					+ cantidad + ", distribuidor=" + distribuidor + "]";
-		}
-
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column(nullable = true)
+	private String nombre;
+	private String descripcion;
+	private double precio;
+	private int stock;
+	
+	public Producto() {
 	}
+
+	public Producto(int id, String nombre, String descripcion, double precio, int stock) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.stock = stock;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+}
 
